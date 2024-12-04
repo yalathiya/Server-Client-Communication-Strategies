@@ -137,4 +137,4 @@ query {
 
 GraphQL simplifies data fetching, reduces overfetching, and allows for more flexible queries compared to REST APIs. This project demonstrates how to implement and leverage GraphQL for a complex data model. Test it locally or deploy using Docker to explore the benefits.
 
-To dive deeper into GraphQL, visit `https://graphql.org/learn/`
+To dive deeper into GraphQL, visit [Learn GraphQL](https://graphql.org/learn/).
