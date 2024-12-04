@@ -55,28 +55,6 @@ Once the index.js is running, you can access the API at `http://localhost:4000/g
 
 ### Sample Queries
 
-### Fetch User with Posts and Comments
-
-```graphql
-query {
-  user(id: 1) {
-    id
-    name
-    posts {
-      id
-      title
-      comments {
-        id
-        text
-        user {
-          name
-        }
-      }
-    }
-  }
-}
-```
-
 ### Fetch All Users
 
 ```graphql
@@ -99,6 +77,72 @@ mutation {
   addUser(name: "Virat Kohli") {
     id
     name
+  }
+}
+```
+
+### Add a Post
+
+```graphql
+mutation {
+  addPost(userId: 1, title: "Mastering Cricket") {
+    id
+    title
+  }
+}
+```
+
+### Add a Comment
+
+```graphql
+mutation {
+  addComment(postId: 1, userId: 2, text: "Amazing insights!") {
+    id
+    text
+    user {
+      name
+    }
+  }
+}
+```
+
+### Fetch User with Posts and Comments
+
+```graphql
+query {
+  user(id: 1) {
+    id
+    name
+    posts {
+      id
+      title
+      comments {
+        id
+        text
+        user {
+          name
+        }
+      }
+    }
+  }
+}
+```
+
+### Fetch All Posts with Nested Comments & User Info
+
+```graphql
+query {
+  posts {
+    id
+    title
+    comments {
+      id
+      text
+      user {
+        id
+        name
+      }
+    }
   }
 }
 ```
