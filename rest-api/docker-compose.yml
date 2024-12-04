@@ -1,17 +1,13 @@
-version: "3"
+version: "3.9"
 
 services:
-  api:
-    build: .
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=development
     volumes:
       - .:/usr/src/app
-    networks:
-      - api-network
-
-networks:
-  api-network:
-    driver: bridge
+      - /usr/src/app/node_modules
+    command: ["node", "index.js"]
