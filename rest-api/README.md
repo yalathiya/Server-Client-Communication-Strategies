@@ -29,8 +29,9 @@ Follow these steps to run the project locally or with Docker.
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/api-crud-demo.git
-cd api-crud-demo
+git clone https://github.com/yalathiya/Server-Client-Communication-Strategies.git
+cd Server-Client-Communication-Strategies
+cd rest-api
 ```
 
 ### 2.1 Using Docker Support
@@ -81,7 +82,6 @@ The following API endpoints are available in this demo:
           "email": "sachin.t@gmail.com",
           "age": 30
       },
-      ...
   ]
   ```
 
