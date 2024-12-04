@@ -76,12 +76,12 @@ The following API endpoints are available in this demo:
 - **Response**:
   ```json
   [
-      {
-          "id": 1,
-          "name": "Sachin Tendulkar",
-          "email": "sachin.t@gmail.com",
-          "age": 30
-      },
+    {
+      "id": 1,
+      "name": "Sachin Tendulkar",
+      "email": "sachin.t@gmail.com",
+      "age": 30
+    }
   ]
   ```
 
