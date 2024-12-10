@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Time Demo</title>
+</head>
+
+<body>
+    <h1>Server-Sent Events (SSE) Time Demo</h1>
+    <div id="time" style="color: red;">Waiting for time...</div>
+    <script>
+        const eventSource = new EventSource('/time');
+        eventSource.onmessage = function (event) {
+            document.getElementById('time').textContent = event.data;
+        };
+    </script>
+</body>
+
+</html>
