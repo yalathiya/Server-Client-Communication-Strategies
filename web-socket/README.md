@@ -1,4 +1,4 @@
-# Regular Polling
+# Web-Socket Chat-Room
 
 ## Setup
 

@@ -1,4 +1,4 @@
-# Regular Polling
+# RWeb-Worker (To sort array)
 
 ## Setup
 
