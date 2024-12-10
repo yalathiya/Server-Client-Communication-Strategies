@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure WebSocket Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #messages {
+            margin-bottom: 20px;
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+
+        #message {
+            padding: 10px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>WebSocket Secure Communication</h2>
+
+    <div id="messages"></div>
+
+    <input type="text" id="message" placeholder="Type your message here">
+    <button id="sendMessage">Send Message</button>
+
+    <script>
+    // Establish a WebSocket connection using wss:// (secure WebSocket)
+    const socket = new WebSocket(`wss://${window.location.host}`);
+
+    // Handle WebSocket open event
+    socket.addEventListener('open', () => {
+      console.log('Connected to WebSocket server');
+    });
+
+    // Handle WebSocket message event
+    socket.addEventListener('message', (event) => {
+      const messagesDiv = document.getElementById('messages');
+      const message = document.createElement('p');
+      
+      // If the data is a Blob (binary data)
+        if (event.data instanceof Blob) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const textData = reader.result;
+                console.log(textData);  // This will now log the actual text
+                message.textContent = `Received: ${textData}`;
+            };
+            reader.readAsText(event.data);
+        } else {
+            console.log(event.data);  // This is for when data is already a string
+        }
+    
+      messagesDiv.appendChild(message);
+    });
+
+    // Send message when the button is clicked
+    const sendButton = document.getElementById('sendMessage');
+    sendButton.addEventListener('click', () => {
+      const input = document.getElementById('message');
+      const message = input.value;
+
+      // Send message to the server
+      if (message) {
+        socket.send(message);
+        input.value = ''; // Clear the input field
+      }
+    });
+    </script>
+</body>
+
+</html>

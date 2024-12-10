@@ -1,31 +1,46 @@
-import express from 'express';
-import { createServer } from 'http';
+import https from 'https';
+import fs from 'fs';
 import { WebSocketServer } from 'ws';
+import express from 'express';
 
+// Create the Express app
 const app = express();
-const server = createServer(app);
+
+// Serve static files (like the client.html)
+app.use(express.static('public'));
+
+// Load SSL certificates
+const privateKey = fs.readFileSync('private-key.pem', 'utf8');
+const certificate = fs.readFileSync('certificate.pem', 'utf8');
+
+// Create HTTPS server (no ca.pem)
+const server = https.createServer(
+  {
+    key: privateKey,
+    cert: certificate,
+  },
+  app
+);
+
+// Create a WebSocket server
 const wss = new WebSocketServer({ server });
 
-// Serve a basic HTML client
-app.get('/', (req, res) => res.sendFile(new URL('./index.html', import.meta.url).pathname));
+wss.on('connection', (ws) => {
+  console.log('New secure WebSocket client connected');
 
-// WebSocket connection
-wss.on('connection', (socket) => {
-  console.log('New client connected.');
-
-  // Broadcast messages to all clients
-  socket.on('message', (message) => {
-    console.log(`Received: ${message}`);
+  // Broadcast incoming messages to all connected clients
+  ws.on('message', (message) => {
+    console.log(`Received message: ${message}`);
     wss.clients.forEach((client) => {
-      if (client.readyState === client.OPEN) {
-        client.send(message);
-      }
+      if (client.readyState === 1) client.send(message);
     });
   });
 
-  socket.on('close', () => console.log('Client disconnected.'));
+  // Send a welcome message to the new client
+  ws.send('Welcome to the secure WebSocket server!');
 });
 
-// Start the server
-const PORT = 3000;
-server.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+// Start the server on port 3000
+server.listen(3000, () => {
+  console.log('Secure WebSocket server is running on https://localhost:3000');
+});
