@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Worker Real-World Scenario</title>
+</head>
+
+<body>
+    <h1>Sorting Large Data with Web Workers</h1>
+    <button id="generateArray">Generate Large Array</button>
+    <button id="sortArray">Sort Array in Worker</button>
+    <p>Array size: <span id="arraySize">N/A</span></p>
+    <p>Sorting Status: <span id="status">Idle</span></p>
+    <p>Result (First 10 Numbers): <span id="result">N/A</span></p>
+
+    <script>
+        // Reference UI elements
+        const generateArrayBtn = document.getElementById('generateArray');
+        const sortArrayBtn = document.getElementById('sortArray');
+        const arraySizeEl = document.getElementById('arraySize');
+        const statusEl = document.getElementById('status');
+        const resultEl = document.getElementById('result');
+
+        let largeArray = [];
+
+        // Initialize Web Worker
+        const worker = new Worker('worker.js');
+
+        // Generate a large random array
+        generateArrayBtn.addEventListener('click', () => {
+            largeArray = Array.from({ length: 1_000_000 }, () => Math.floor(Math.random() * 1_000_000));
+            arraySizeEl.textContent = largeArray.length;
+            statusEl.textContent = 'Array Generated';
+            resultEl.textContent = 'N/A';
+        });
+
+        // Sort array in the Web Worker
+        sortArrayBtn.addEventListener('click', () => {
+            if (largeArray.length === 0) {
+                alert('Generate an array first!');
+                return;
+            }
+            statusEl.textContent = 'Sorting...';
+            worker.postMessage(largeArray); // Send the array to the worker
+        });
+
+        // Receive sorted array from the worker
+        worker.onmessage = function (event) {
+            const sortedArray = event.data;
+            statusEl.textContent = 'Sorting Complete';
+            resultEl.textContent = sortedArray.slice(0, 10).join(', '); // Display first 10 numbers
+        };
+    </script>
+</body>
+
+</html>
