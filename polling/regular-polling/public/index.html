@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regular Polling Demo</title>
+</head>
+
+<body>
+    <h1>Regular Polling Demo</h1>
+    <div id="data" style="color: red;"></div>
+    <script>
+        const fetchData = () => {
+            fetch('/polling')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('data').innerText = data.message;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        };
+
+        // Fetch data every 5 seconds
+        setInterval(fetchData, 5000);
+    </script>
+</body>
+
+</html>
