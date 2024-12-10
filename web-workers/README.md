@@ -1,4 +1,4 @@
-# RWeb-Worker (To sort array)
+# Web-Worker (To sort array)
 
 ## Setup
 
@@ -37,12 +37,13 @@ Once the index.js is running, you can access the implementation at `https://loca
 
 ## Testing
 
-Here, Sorting of array is off-loaded from main thread, 
+Here, Sorting of array is off-loaded from main thread,
 try different scenarios / modification of code to understand the behavior.
 
 ## Web - Worker in Project Structure
 
 ## Project Structure
+
 ```bash
 web-worker/
 ├── public/
